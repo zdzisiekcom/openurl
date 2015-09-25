@@ -1,39 +1,37 @@
 var root = chrome.extension.getBackgroundPage();
 
+console.log('Open popup ');
+
 $(function() {
-	
+
 	$('#issueId').focus();
 	document.execCommand('paste');
-	document.execCommand('selectAll')
+	document.execCommand('selectAll');
 
 	$('#issueId').keypress(function(event) {
 		if (event.which === 13) {
-			openIssue();
+			openIssue($('#issueId').val());
 		}
 	});
 
 	$('#openIssue').click(function() {
-		openIssue();
+		openIssue($('#issueId').val());
 	});
-	
-	$('#openSettings').click(function(){
-		chrome.tabs.create({url: chrome.extension.getURL('settings.html')})
+
+	$('#openSettings').click(function() {
+		if (chrome.runtime.openOptionsPage) {
+			chrome.runtime.openOptionsPage();
+		} else {
+			window.open(chrome.runtime.getURL('options.html'));
+		}
 	});
 });
 
-function openIssue() {
+function openIssue(issueVal) {
 
-	var val = $('#issueId').val();
-	
-	if (val.match(/[0-9]+/)){
-		url = root.urls.getIssueUrl().replace("%s", val);
-	} else {
-		url = "https://secure.artegence.com/redmine/searching?esearch=%s".replace("%s", val);
-	}
-	
-	chrome.tabs.create({
-		url : url,
-		active : true
+	chrome.runtime.sendMessage({
+		message : 'open issue',
+		issue : issueVal
 	});
 
 }
