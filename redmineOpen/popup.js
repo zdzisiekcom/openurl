@@ -1,32 +1,31 @@
 var root = chrome.extension.getBackgroundPage();
 
-console.log('Open popup');
-
 $(function() {
 
 	$('#issueId').focus();
 	document.execCommand('paste');
 	document.execCommand('selectAll');
 
-	$('#issueId').keypress(function(event) {
+	$('#issueId').keyup(function(event) {
 		if (event.which === 13) {
-			openIssue($('#issueId').val());
+			defaultAction($('#issueId').val());
 		}
 		updateAvaiableLinks();
 	});
+	
+	$('#newWindow').prop('checked', root.newWindow);
 
 	$('#timeEntry').click(function() {
-		timeEntry($('#issueId').val());
+		timeEntry();
 	});
 
 	$('#showIssue').click(function() {
-		openIssue($('#issueId').val());
+		openIssue();
 	});
 
 	$('#search').click(function() {
-		searchFor($('#issueId').val());
+		searchFor();
 	});
-
 
 	$('#openSettings').click(function() {
 		if (chrome.runtime.openOptionsPage) {
@@ -38,26 +37,67 @@ $(function() {
 });
 
 function updateAvaiableLinks(){
-	
+	val = $('#issueId').val();
+	if (val.match(/^[0-9]+$/)) {
+		defaultAction = openIssue;
+		$('#timeEntry').fadeIn()
+		$('#showIssue').fadeIn()
+		$('#search').fadeIn()
+		updateDefaultLink();
+	} else {
+		defaultAction = searchFor;
+		$('#timeEntry').fadeOut()
+		$('#showIssue').fadeOut()
+		matchNewWindow(root.cfg.searchURL)
+	}
 }
 
-function openIssue(issueVal) {
+function updateDefaultLink() {
+	if (root.issueAction == 'open'){
+		$('#showIssue').addClass('bold');
+		$('#timeEntry').removeClass('bold');
+		matchNewWindow(root.cfg.issueURL)
+	} else {
+		$('#showIssue').removeClass('bold');
+		$('#timeEntry').addClass('bold');
+		matchNewWindow(root.cfg.timeEntryURL)
+	}
+}
+
+function matchNewWindow(searchFor){
+	console.log('Match: ' + searchFor.replace("%s", "*"));
+	chrome.tabs.query({
+		currentWindow : true,
+		active : true,
+		url : searchFor.replace("%s", "*")
+	}, function (tabs){
+		$('#newWindow').prop('checked', tabs.length == 0);
+	})
+}
+
+function openIssue() {
 	chrome.runtime.sendMessage({
 		message : 'open',
-		issue : issueVal
+		issue : $('#issueId').val(),
+		window : $('#newWindow').is(':checked')
 	});
 }
 
-function timeEntry(issueVal) {
+function timeEntry() {
 	chrome.runtime.sendMessage({
 		message : 'time',
-		issue : issueVal
+		issue : $('#issueId').val(),
+		window : $('#newWindow').is(':checked')
 	});
 }
 
-function searchFor(query) {
+function searchFor() {
 	chrome.runtime.sendMessage({
 		message : 'search',
-		query : query
+		query : $('#issueId').val(),
+		window : $('#newWindow').is(':checked')
 	});
 }
+
+var defaultAction = openIssue;
+
