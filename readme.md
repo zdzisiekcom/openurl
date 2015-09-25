@@ -1,0 +1,1 @@
+Otwieracz do redmine-a
