@@ -6,20 +6,38 @@
       body {
         font-family: "Segoe UI", "Lucida Grande", Tahoma, sans-serif;
         font-size: 100%;
-        width: 480px;
+        width: 420px;
+        padding-left: 7px;
       }
       
       #issueId {
-      	width : 330px;
+      	width : 400px;
+      	margin: 15px 0px 0px 0px;
       }
       
+      #actions {
+      	padding : 15px 0px 0px 0px;
+      }
       .actionItem {
       	text-decoration: none;
+      	text-align:center;
       	display : inline;
+      	background: linear-gradient(to bottom, rgba(109,179,242,1) 0%,rgba(84,163,238,1) 50%,rgba(54,144,240,1) 51%,rgba(30,105,222,1) 100%);
+      	width: 120px;
+      	height: 30px;
+      	color: white;
+      	border-radius: 7px;
+		padding: 2px 15px 5px 15px;
+		margin-right: 7px;      	
+      }
+      
+      .actionItem:HOVER {
+      	background: linear-gradient(to bottom, rgba(184,225,252,1) 0%,rgba(169,210,243,1) 10%,rgba(144,186,228,1) 25%,rgba(144,188,234,1) 37%,rgba(144,191,240,1) 50%,rgba(107,168,229,1) 51%,rgba(162,218,245,1) 83%,rgba(189,243,253,1) 100%);  
       }
       
       .bold {
-      	font-weight: bold;'
+      	font-weight: bold;
+      	
       }
     </style>
 
@@ -29,15 +47,21 @@
 
   </head>
   <body>
-    <input type="text" id="issueId" name="issueId" />
-	<br/>
-	<a class="actionItem" href="#" id="search"> [ search ] </a>
-	<a class="actionItem" href="#" id="timeEntry"> [ time ] </a>
-	<a class="actionItem" href="#" id="showIssue"> [ issue ] </a>
+  	<div>
+  		Szukaj <br/>
+	    <input type="text" id="issueId" name="issueId" />
+  	</div>
+  	<div id="actions">
+		<a class="actionItem" href="#" id="search">Szukaj</a>
+		<a class="actionItem" href="#" id="timeEntry">Czas</a>
+		<a class="actionItem" href="#" id="showIssue">Otwórz</a>
+  	</div>
 	
+	<div style="float: right; margin-right: 10px">
 	<input id="newWindow" type="checkbox" checked="checked"/><label for="newWindow">new window</label>
-	<a href="#" id="openSettings">[s]</a><br/> 
-    
+	<a href="#" id="openSettings"><img src="settings.png" width="18" border="0"/></a><br/> 
+	</div>
+    <br/>
   </body>
 </html>
 

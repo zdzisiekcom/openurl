@@ -12,7 +12,7 @@ chrome.commands.onCommand.addListener(function(command) {
 		url : 'popup.html',
 		type : 'popup',
 		width : 500,
-		height : 150
+		height : 200
 	});
 
 });
