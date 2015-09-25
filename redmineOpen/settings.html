@@ -1,0 +1,41 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Open redmine settings</title>
+    <meta charset="UTF-8">
+    
+    <style>
+      body {
+        font-family: "Segoe UI", "Lucida Grande", Tahoma, sans-serif;
+        font-size: 100%;
+      }
+      
+      .urlLabel {
+        width: 200px;
+      }
+      
+      .urlEntry {
+        width: 300px;
+       }
+    </style>
+
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+  	<script src="settings.js"></script>
+
+  </head>
+  <body>
+  	<h1>
+		<img src="icon.png" alt="i" width="100"/>
+		Ustawienia otwieranych adresów
+  	</h1>
+  	<hr>
+    <span class="urlLabel">Zadania: </span><input class="urlEntry" type="text" id="issueUrl" /><br/>
+    <span class="urlLabel">Wyszukiwarka: </span><input class="urlEntry" type="text" id="searchUrl" /><br/>
+    <span class="urlLabel">Logowanie czasu: </span><input class="urlEntry" type="text" id="timeUrl" /><br/>
+    <div style="text-align:left;">
+    	<button id="saveConfigBtn">Zapisz</button>
+    	<button id="cancelBtn">Anuluj</button>
+    </div>
+  </body>
+</html>
+
