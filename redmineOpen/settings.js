@@ -21,7 +21,7 @@ function restore_options() {
 			.get(
 					{
 						issueURL : 'https://secure.artegence.com/redmine/issues/%s',
-						searchURL : 'https://secure.artegence.com/redmine/search?q?=%s',
+						searchURL : 'https://secure.artegence.com/redmine/searching?esearch=%s',
 						timeEntryURL : 'https://secure.artegence.com/redmine/issues/%s/time_entries/new'
 					}, function(items) {
 						$('#issueUrl').val(items.issueURL);

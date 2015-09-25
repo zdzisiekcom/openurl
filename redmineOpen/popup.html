@@ -12,6 +12,15 @@
       #issueId {
       	width : 330px;
       }
+      
+      .actionItem {
+      	text-decoration: none;
+      	display : inline;
+      }
+      
+      .bold {
+      	font-weight: bold;'
+      }
     </style>
 
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
@@ -20,8 +29,17 @@
 
   </head>
   <body>
-    Search: <input type="text" id="issueId" name="issueId" /><button id="openIssue">OK</button>
-    <a href="#" id="openSettings">[s]</a>
+    <input type="text" id="issueId" name="issueId" />
+    
+	<a href="#" id="openSettings">[s]</a><br/>
+	<br/>
+	<a class="actionItem" href="#" id="timeEntry"> [ time ] </a>
+	<a class="actionItem" href="#" id="showIssue"> [ issue ] </a>
+	<a class="actionItem bold" href="#" id="search"> [ search ] </a>
+	
+	<input id="newWindow" type="checkbox" checked="checked"/> new window 
+	<hr/>
+    
   </body>
 </html>
 

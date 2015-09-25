@@ -7,7 +7,7 @@ chrome.commands.onCommand.addListener(function(command) {
 	console.log(command)
 
 	chrome.windows.create({
-		url : 'popup.html?time',
+		url : 'popup.html',
 		type : 'popup',
 		width : 500,
 		height : 150
@@ -16,8 +16,14 @@ chrome.commands.onCommand.addListener(function(command) {
 });
 
 chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
-	if (request.message == "open issue") {
+	if (request.message == "open") {
 		openIssue(request.issue);
+	}
+	if (request.message == "time") {
+		openTimelog(request.issue);
+	}
+	if (request.message == "search") {
+		searchFor(request.query);
 	}
 	if (request.message == 'save settings') {
 		saveSettings(request.settings);
@@ -25,30 +31,35 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
 });
 
 function openIssue(issue) {
-
-	console.log('Open: ' + issue);
-	console.log('Using: ' + cfg.issueURL);
-
-	if (issue.match(/[0-9]+/)) {
-		url = cfg.issueURL.replace("%s", issue);
-	} else {
-		url = cfg.searchURL.replace("%s", issue);
-	}
-
+	url = cfg.issueURL.replace("%s", issue);
 	chrome.tabs.create({
 		url : url,
 		active : true
 	});
+}
 
+function openTimelog(issue) {
+	url = cfg.timeEntryURL.replace("%s", issue);
+	chrome.tabs.create({
+		url : url,
+		active : true
+	});
+}
+
+function searchFor(query) {
+	url = cfg.searchURL.replace("%s", query);
+	chrome.tabs.create({
+		url : url,
+		active : true
+	});
 }
 
 function loadSettings() {
-
 	chrome.storage.sync
 			.get(
 					{
 						issueURL : 'https://secure.artegence.com/redmine/issues/%s',
-						searchURL : 'https://secure.artegence.com/redmine/search?q?=%s',
+						searchURL : 'https://secure.artegence.com/redmine/searching?esearch=%s',
 						timeEntryURL : 'https://secure.artegence.com/redmine/issues/%s/time_entries/new'
 					}, function(items) {
 						cfg = items;

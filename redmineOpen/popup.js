@@ -1,6 +1,6 @@
 var root = chrome.extension.getBackgroundPage();
 
-console.log('Open popup ');
+console.log('Open popup');
 
 $(function() {
 
@@ -12,11 +12,21 @@ $(function() {
 		if (event.which === 13) {
 			openIssue($('#issueId').val());
 		}
+		updateAvaiableLinks();
 	});
 
-	$('#openIssue').click(function() {
+	$('#timeEntry').click(function() {
+		timeEntry($('#issueId').val());
+	});
+
+	$('#showIssue').click(function() {
 		openIssue($('#issueId').val());
 	});
+
+	$('#search').click(function() {
+		searchFor($('#issueId').val());
+	});
+
 
 	$('#openSettings').click(function() {
 		if (chrome.runtime.openOptionsPage) {
@@ -27,11 +37,27 @@ $(function() {
 	});
 });
 
-function openIssue(issueVal) {
+function updateAvaiableLinks(){
+	
+}
 
+function openIssue(issueVal) {
 	chrome.runtime.sendMessage({
-		message : 'open issue',
+		message : 'open',
 		issue : issueVal
 	});
+}
 
+function timeEntry(issueVal) {
+	chrome.runtime.sendMessage({
+		message : 'time',
+		issue : issueVal
+	});
+}
+
+function searchFor(query) {
+	chrome.runtime.sendMessage({
+		message : 'search',
+		query : query
+	});
 }
