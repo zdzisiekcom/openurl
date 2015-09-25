@@ -1,9 +1,9 @@
 {
   "manifest_version": 2,
 
-  "name": "Simple open url extension ",
+  "name": "Open Redmine urls extension ",
   "description": "This extension allows to open url by pattern",
-  "version": "1.0",
+  "version": "1.1",
 
   "browser_action": {
     "default_icon": "icon.png",
@@ -13,11 +13,19 @@
   
   "background": {
     "scripts": ["background.js"],
-    "persistent": false
+    "persistent": true
   },
   
+  "options_ui":{
+      "page": "settings.html",
+      "chrome_style": true
+  },
   "commands": {
-    "toggle-feature": {
+    "search-feature": {
+      "suggested_key": { "default": "Alt+Shift+R" },
+      "description": "Open redmine search"
+    },
+    "timelog-feature": {
       "suggested_key": { "default": "Alt+T" },
       "description": "Open time log"
     },
