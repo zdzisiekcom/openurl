@@ -1,0 +1,32 @@
+{
+	"appName" : {
+		"message" : "Otwieracz do redmina",
+		"description" : ""
+	},
+	"appDesc" : {
+		"message" : "Pozwala otworzyć coś w przeglądarce",
+		"description" : ""
+	},
+	"popupSearchTitle" : {
+		"message" : "Szukaj, otwieraj, czy cokolwiek",
+		"description" : ""
+	},
+	"popupSearchBtn" : {
+		"message" : "Szukaj",
+		"description" : ""
+	},
+	"popupOpenBtn" : {
+		"message" : "Otwórz",
+		"description" : ""
+	},
+	"popupTimeBtn" : {
+		"message" : "Czas",
+		"description" : ""
+	},
+	"popupNewTab" : {
+		"message" : "new",
+		"description" : ""
+	}
+	
+	
+}
