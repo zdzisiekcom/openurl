@@ -1,8 +1,7 @@
 console.log('Init application');
 
 var cfg;
-var issueAction = 'open'
-var newWindow = true;
+var issueAction = 'showIssue'
 
 chrome.commands.onCommand.addListener(function(command) {
 
@@ -18,35 +17,44 @@ chrome.commands.onCommand.addListener(function(command) {
 });
 
 chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
-	if (request.message == "open") {
-		openIssue(request.issue, request.window);
+	if (request.message == "showIssue") {
+		openIssue(request.issue);
 	}
-	if (request.message == "time") {
-		openTimelog(request.issue, request.window);
+	if (request.message == "showIssueNew") {
+		openIssueNew(request.issue);
+	}
+	if (request.message == "timeEntry") {
+		openTimelog(request.issue);
 	}
 	if (request.message == "search") {
-		searchFor(request.query, request.window);
+		searchFor(request.query);
 	}
 	if (request.message == 'save settings') {
 		saveSettings(request.settings);
 	}
 });
 
-function openIssue(issue, newWindow) {
-	issueAction = 'open'
+function openIssue(issue) {
+	issueAction = 'showIssue'
 	url = cfg.issueURL.replace("%s", issue);
-	openUrl(url, newWindow);
+	openUrl(url, false);
 }
 
-function openTimelog(issue, newWindow) {
-	issueAction = 'time'
+function openIssueNew(issue) {
+	issueAction = 'showIssueNew'
+	url = cfg.issueURL.replace("%s", issue);
+	openUrl(url, true);
+}
+
+function openTimelog(issue) {
+	issueAction = 'timeEntry'
 	url = cfg.timeEntryURL.replace("%s", issue);
-	openUrl(url, newWindow);
+	openUrl(url, false);
 }
 
-function searchFor(query, newWindow) {
+function searchFor(query) {
 	url = cfg.searchURL.replace("%s", query);
-	openUrl(url, newWindow);
+	openUrl(url, false);
 }
 
 function openUrl(url, inNewWindow){
@@ -55,13 +63,11 @@ function openUrl(url, inNewWindow){
 			url : url,
 			active : true
 		});
-		newWindow = inNewWindow;
 	} else {
 		chrome.tabs.update({
 			url : url,
 			active : true
 		});
-		newWindow = inNewWindow;
 	}
 }
 

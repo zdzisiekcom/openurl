@@ -8,13 +8,11 @@ $(function() {
 
 	$('#issueId').keyup(function(event) {
 		if (event.which === 13) {
-			defaultAction($('#issueId').val());
+			execDefaultAction();
 		}
 		updateAvaiableLinks();
 	});
 	
-	$('#newWindow').prop('checked', root.newWindow);
-
 	$('#timeEntry').click(function() {
 		timeEntry();
 	});
@@ -22,6 +20,11 @@ $(function() {
 	$('#showIssue').click(function() {
 		openIssue();
 	});
+
+	$('#showIssueNew').click(function() {
+		openIssueNew();
+	});
+
 
 	$('#search').click(function() {
 		searchFor();
@@ -36,32 +39,42 @@ $(function() {
 	});
 });
 
+var issueActions = ['showIssue', 'showIssueNew', 'timeEntry'];
+
 function updateAvaiableLinks(){
 	val = $('#issueId').val();
 	if (val.match(/^[0-9]+$/)) {
-		defaultAction = openIssue;
-		$('#timeEntry').fadeIn()
-		$('#showIssue').fadeIn()
-		$('#search').fadeIn()
+		defaultAction = root.issueAction;
+		showIssueActions();
 		updateDefaultLink();
 	} else {
-		defaultAction = searchFor;
-		$('#timeEntry').fadeOut()
-		$('#showIssue').fadeOut()
-		matchNewWindow(root.cfg.searchURL)
+		defaultAction = 'search';
+		hideIssueActions();
 	}
 }
 
+function showIssueActions(){
+	issueActions.forEach(function(action){
+		$('#'+action).fadeIn();
+	})
+	$('#search').removeClass('bold');
+}
+
+function hideIssueActions(){
+	issueActions.forEach(function(action){
+		$('#'+action).fadeOut();
+	});
+	$('#search').addClass('bold');
+}
+
 function updateDefaultLink() {
-	if (root.issueAction == 'open'){
-		$('#showIssue').addClass('bold');
-		$('#timeEntry').removeClass('bold');
-		matchNewWindow(root.cfg.issueURL)
-	} else {
-		$('#showIssue').removeClass('bold');
-		$('#timeEntry').addClass('bold');
-		matchNewWindow(root.cfg.timeEntryURL)
-	}
+	issueActions.forEach(function(action){
+		if (root.issueAction == action){
+			$('#'+action).addClass('bold');
+		} else {
+			$('#'+action).removeClass('bold');
+		}
+	})
 }
 
 function matchNewWindow(searchFor){
@@ -77,17 +90,23 @@ function matchNewWindow(searchFor){
 
 function openIssue() {
 	chrome.runtime.sendMessage({
-		message : 'open',
+		message : 'showIssue',
 		issue : $('#issueId').val(),
-		window : $('#newWindow').is(':checked')
 	});
 }
 
+function openIssueNew() {
+	chrome.runtime.sendMessage({
+		message : 'showIssueNew',
+		issue : $('#issueId').val(),
+	});
+}
+
+
 function timeEntry() {
 	chrome.runtime.sendMessage({
-		message : 'time',
+		message : 'timeEntry',
 		issue : $('#issueId').val(),
-		window : $('#newWindow').is(':checked')
 	});
 }
 
@@ -95,9 +114,15 @@ function searchFor() {
 	chrome.runtime.sendMessage({
 		message : 'search',
 		query : $('#issueId').val(),
-		window : $('#newWindow').is(':checked')
 	});
 }
 
-var defaultAction = openIssue;
+function execDefaultAction(){
+	chrome.runtime.sendMessage({
+		message : defaultAction,
+		query : $('#issueId').val(),
+	});
+}
+
+var defaultAction = 'showIssue';
 
