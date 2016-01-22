@@ -55,14 +55,14 @@ function updateAvaiableLinks(){
 
 function showIssueActions(){
 	issueActions.forEach(function(action){
-		$('#'+action).fadeIn();
+		$('#'+action).show();
 	})
 	$('#search').removeClass('bold');
 }
 
 function hideIssueActions(){
 	issueActions.forEach(function(action){
-		$('#'+action).fadeOut();
+		$('#'+action).hide();
 	});
 	$('#search').addClass('bold');
 }
