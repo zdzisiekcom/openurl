@@ -1,0 +1,32 @@
+{
+	"appName" : {
+		"message" : "Redmine opener",
+		"description" : ""
+	},
+	"appDesc" : {
+		"message" : "This extension allows to open redmine issues",
+		"description" : ""
+	},
+	"popupSearchTitle" : {
+		"message" : "Open, Search, or go away",
+		"description" : ""
+	},
+	"popupSearchBtn" : {
+		"message" : "Search",
+		"description" : ""
+	},
+	"popupOpenBtn" : {
+		"message" : "Open",
+		"description" : ""
+	},
+	"popupTimeBtn" : {
+		"message" : "Time",
+		"description" : ""
+	},
+	"popupNewTab" : {
+		"message" : "TAB",
+		"description" : ""
+	}
+	
+	
+}

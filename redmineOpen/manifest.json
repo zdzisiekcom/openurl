@@ -1,10 +1,13 @@
 {
   "manifest_version": 2,
-
-  "name": "Open Redmine urls extension ",
-  "description": "This extension allows to open url by pattern",
+  "default_locale": "en",
+	
+  "name": "__MSG_appName__",
+  "description": "__MSG_appDesc__",
   "version": "1.1",
 
+  "icons": { "128": "icon.png" },
+          
   "browser_action": {
     "default_icon": "icon.png",
     "default_popup": "popup.html",

@@ -1,14 +1,26 @@
 <!doctype html>
 <html>
 <head>
-<title>Open redmine urls</title>
+	<title>Open redmine URLs</title>
+	<meta charset="UTF-8">
 <style>
 body {
 	font-family: "Segoe UI", "Lucida Grande", Tahoma, sans-serif;
+	font-size: 90%;
+	width: 420px;
+	background: #F7F7F7;
+}
+
+.item {
+	margin-bottom: 14px;
 }
 
 input {
 	width: 100%;
+}
+
+.save {
+	text-align: right;
 }
 
 #msg {
@@ -34,22 +46,21 @@ input {
 </head>
 <body>
 	<div id="msg">
-		<div>Zapisa≥em ustawienia!</div>
+		<div>Zapisa≈Çem ustawienia!</div>
 	</div>
-	Issue URL:
-	<br />
-	<input type="text" id="issueUrl" />
-	<br />
-	Search URL:
-	<br />
-	<input type="text" id="searchUrl" />
-	<br /> 
-	Time entry URL:
-	<br />
-	<input type="text" id="timeEntryUrl" />
-	<br />
-	<br/>
-	<div style="text-align: right;">
+	<div class="item">
+		<b>Issue URL:</b>
+		<input type="text" id="issueUrl" />
+	</div>
+	<div class="item">
+		<b>Search URL:</b>
+		<input type="text" id="searchUrl" />
+	</div>
+	<div class="item">
+		<b>Time entry URL:</b>
+		<input type="text" id="timeEntryUrl" />
+	</div>
+	<div class="save">
 		<button id="saveButton">Zapisz</button>
 	</div>
 </body>
