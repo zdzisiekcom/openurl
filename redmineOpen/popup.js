@@ -1,5 +1,7 @@
 var root = chrome.extension.getBackgroundPage();
 
+var defaultAction = 'openIssue';
+
 $(function() {
 
 	localizeHtmlPage();
@@ -9,27 +11,14 @@ $(function() {
 	document.execCommand('selectAll');
 
 	$('#issueId').keyup(function(event) {
-		if (event.which === 13) {
-			execDefaultAction();
-		}
-		updateAvaiableLinks();
+        if (event.which === 13) {
+			executeOpen(defaultAction);
+        }
+        updateAvaiableLinks();
 	});
 	
-	$('#timeEntry').click(function() {
-		timeEntry();
-	});
-
-	$('#showIssue').click(function() {
-		openIssue();
-	});
-
-	$('#showIssueNew').click(function() {
-		openIssueNew();
-	});
-
-
-	$('#search').click(function() {
-		searchFor();
+	$('.actionItem').click(function(event) {
+		executeOpen(event.toElement.id);
 	});
 
 	$('#openSettings').click(function() {
@@ -41,7 +30,7 @@ $(function() {
 	});
 });
 
-var issueActions = ['showIssue', 'showIssueNew', 'timeEntry'];
+var issueActions = ['openIssue', 'openIssueNew', 'openTimelog'];
 
 function updateAvaiableLinks(){
 	val = $('#issueId').val();
@@ -50,7 +39,7 @@ function updateAvaiableLinks(){
 		showIssueActions();
 		updateDefaultLink();
 	} else {
-		defaultAction = 'search';
+		defaultAction = 'searchFor';
 		hideIssueActions();
 	}
 }
@@ -59,7 +48,7 @@ function showIssueActions(){
 	issueActions.forEach(function(action){
 		$('#'+action).show();
 	})
-	$('#search').removeClass('bold');
+	$('#search').removeClass('bold')
 }
 
 function hideIssueActions(){
@@ -80,7 +69,6 @@ function updateDefaultLink() {
 }
 
 function matchNewWindow(searchFor){
-	console.log('Match: ' + searchFor.replace("%s", "*"));
 	chrome.tabs.query({
 		currentWindow : true,
 		active : true,
@@ -90,44 +78,14 @@ function matchNewWindow(searchFor){
 	})
 }
 
-function openIssue() {
+
+function executeOpen(action) {
 	chrome.runtime.sendMessage({
-		message : 'showIssue',
-		issue : $('#issueId').val(),
+        action : 'open',
+		message : action,
+        query : $('#issueId').val(),
 	});
 }
-
-function openIssueNew() {
-	chrome.runtime.sendMessage({
-		message : 'showIssueNew',
-		issue : $('#issueId').val(),
-	});
-}
-
-
-function timeEntry() {
-	chrome.runtime.sendMessage({
-		message : 'timeEntry',
-		issue : $('#issueId').val(),
-	});
-}
-
-function searchFor() {
-	chrome.runtime.sendMessage({
-		message : 'search',
-		query : $('#issueId').val(),
-	});
-}
-
-function execDefaultAction(){
-	chrome.runtime.sendMessage({
-		message : defaultAction,
-		query : $('#issueId').val(),
-	});
-}
-
-var defaultAction = 'showIssue';
-
 
 function localizeHtmlPage()
 {
